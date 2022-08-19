@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+body{
+    background-color: #EEF9BF;
+    
+}
+h1{
+    font-family: Roboto;
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 66px;
+    letter-spacing: -0.004em;
+    text-align: left;
+    color:#75B79E;
+
+    height: 63px;
+    width: 540px;
+    margin: auto;
+    margin-top: 40px;
+}
+
+/* carta */
+.carta{
+    height: 146px;
+    width: 117px;
+    perspective: 800px;
+}
+.frete .atras{
+    border-radius: 5px;
+    background-color: #A7E9AF;
+    border: 1px solid #99CEA8;
+    justify-content: center;
+    position: absolute;
+}
+.frente{
+    background-color: bisque;
+}
+.carta div img{
+    width: 100px;
+    display: block;
+    margin: auto;
+    margin-top: 24px;
+}
