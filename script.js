@@ -1,5 +1,3 @@
-//escopo global
-
 //definindo número de cartas
 let num = Number(prompt("Com quantas cartas você quer jogar? (deve ser um número entre 4 e 14)"));
 while (num < 4 || num > 14) {
@@ -42,4 +40,14 @@ cartas.sort(comparador);
 
 function comparador() { 
 	return Math.random() - 0.5; 
+}
+
+
+//virar as cartas com o click
+function virarCarta(carta){
+    const frente = carta.querySelector(".frente");
+    const atras = carta.querySelector(".atras");
+
+    frente.classList.add("rotacao-frente");
+    atras.classList.add("rotacao-atras");
 }
