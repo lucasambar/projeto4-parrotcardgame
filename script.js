@@ -40,9 +40,21 @@ for (let indice = 0; indice < num; indice++) {
     </div>
     `;
 }
+//até aqui tá tudo ok!
+//remove cartas, usado na função virarCarta
+function remove(a,b,c,d) {
+    a.classList.remove("rotacao-frente");
+    b.classList.remove("rotacao-frente");
+    c.classList.remove("rotacao-atras");
+    d.classList.remove("rotacao-atras");
+}
 
 //virar as cartas com o click
 let contaCarta = 0; 
+let carta1 = "";
+let numJogadas = 0;
+let acertos = 0;
+
 function virarCarta(carta) {
     const frente = carta.querySelector(".frente");
     const atras = carta.querySelector(".atras");
@@ -50,42 +62,35 @@ function virarCarta(carta) {
     frente.classList.add("rotacao-frente");
     atras.classList.add("rotacao-atras");
 
-    contaCarta ++;
-    acertos()
-}
-let carta1 = 
-consoleLog(contaCarta);
+    if (contaCarta === 0) {
+        contaCarta ++;
+        carta1 = carta
+    }
+    else {
+        numJogadas ++;
 
-//confere se está certo ou errado
-let acertos = 0;
-
-while (acertos !== numPares){
-    if (contaCarta === 2) {
-        let cartasSelecionadas = document.querySelectorAll(".rotacao-atras");
-
-        let carta1 = cartasSelecionadas[0];
-        let img1 = carta1.querySelector("img");
+        let img1 = carta1.getAtribute("src");
         let frente1 = carta1.querySelector(".frente");
         let atras1 = carta1.querySelector(".atras");
-        
-        let carta2 = cartasSelecionadas[1];
-        let img2 = carta2.querySelector("img");
+
+        let carta2 = carta;
+        let img2 = carta2.getAtribute("src");
         let frente2 = carta2.querySelector(".frente");
         let atras2 = carta2.querySelector(".atras");
 
-        if (img1 !== img2) {
-            setTimeout(remove, 2000);
-            function remove() {
-                frente1.classList.remove("rotacao-frente");
-                frente2.classList.remove("rotacao-frente");
-                atras1.classList.remove("rotacao-atras");
-                atras2.classList.remove("rotacao-atras");
-            }
-            contaCarta = 0;
+        if (img1 === img2) {
+            acertos ++;
         }
         else {
-            acertos ++;
-            contaCarta = 0;
+            setTimeout(remove, 2000);
+            remove(frente1,frente2,atras1,atras2);
         }
+
+        contaCarta = 0;
     }
+}
+
+//fim de jogo
+if (acertos === numPares) {
+    alert("Parabéns! Você terminou o jogo em: " + numJogadas + " jogadas.")
 }
