@@ -1,6 +1,8 @@
 //primeira embaralhada
-let gifs = ["bobrossparrot.gif","explodyparrot.gif","fiestaparrot.gif",
-"metalparrot.gif","revertitparrot.gif","tripletsparrot.gif","unicornparrot.gif"];
+let gifs = [{img:"bobrossparrot.gif",id:"bobros"},{img:"explodyparrot.gif", id:"explod"},
+{img:"fiestaparrot.gif", id:"fiesta"},{img:"metalparrot.gif", id:"metal"},
+{img:"revertitparrot.gif",id:"revert"},{img:"tripletsparrot.gif",id:"triplet"},
+{img:"unicornparrot.gif",id:"unicorn"}];
 function embaralha(array){
     for (let i = array.length - 1; i>0 ; i--) {
         const j = Math.floor(Math.random()*(i+1));
@@ -12,9 +14,9 @@ function embaralha(array){
 gifs = embaralha(gifs);
 
 //definindo número de cartas 
-let num = Number(prompt("Com quantas cartas você quer jogar? (deve ser um número entre 4 e 14)"));
+let num = Number(prompt("Com quantas cartas você quer jogar? (deve ser um número entre 4 e 14; e par!)"));
 while (num < 4 || num > 14 || num%2===1) {
-    num = Number(prompt("Com quantas cartas você quer jogar? (deve ser um número entre 4 e 14)"));
+    num = Number(prompt("Com quantas cartas você quer jogar? (deve ser um número entre 4 e 14; e par!)"));
 }
 let numPares = num/2;
 
@@ -30,19 +32,19 @@ cartasJogo = embaralha(cartasJogo);
 const section = document.querySelector("section");
 for (let indice = 0; indice < num; indice++) {
     section.innerHTML += `
-    <div class="carta" onclick="virarCarta(this)">
+    <div class="carta" onclick="virarCarta(this)" id="${cartasJogo[indice]['id']}">
         <div class="frente">
             <img src="./img/front.png">
         </div>
         <div class="atras">
-            <img src="./img/${cartasJogo[indice]}">
+            <img src="./img/${cartasJogo[indice]["img"]}">
         </div> 
     </div>
     `;
 }
 //até aqui tá tudo ok!
 //remove cartas, usado na função virarCarta
-function remove(a,b,c,d) {
+function remove() {
     a.classList.remove("rotacao-frente");
     b.classList.remove("rotacao-frente");
     c.classList.remove("rotacao-atras");
@@ -50,10 +52,11 @@ function remove(a,b,c,d) {
 }
 
 //virar as cartas com o click
-let contaCarta = 0; 
-let carta1 = "";
+let cartaVirada = false;
 let numJogadas = 0;
 let acertos = 0;
+
+let carta1, carta2, id1, id2;
 
 function virarCarta(carta) {
     const frente = carta.querySelector(".frente");
@@ -62,35 +65,63 @@ function virarCarta(carta) {
     frente.classList.add("rotacao-frente");
     atras.classList.add("rotacao-atras");
 
-    if (contaCarta === 0) {
-        contaCarta ++;
-        carta1 = carta
+    if (!cartaVirada) {  //primeira carta virada (ok)
+        cartaVirada = true;
+        carta1 = carta;
+        id1 = carta1.getAttribute("id");
+        return;
     }
-    else {
+    else { // segunda carta virada
         numJogadas ++;
+        carta2 = carta;
+        id2 = carta2.getAttribute("id");
+        cartaVirada = false;
 
-        let img1 = carta1.getAtribute("src");
-        let frente1 = carta1.querySelector(".frente");
-        let atras1 = carta1.querySelector(".atras");
-
-        let carta2 = carta;
-        let img2 = carta2.getAtribute("src");
-        let frente2 = carta2.querySelector(".frente");
-        let atras2 = carta2.querySelector(".atras");
-
-        if (img1 === img2) {
-            acertos ++;
-        }
-        else {
-            setTimeout(remove, 2000);
-            remove(frente1,frente2,atras1,atras2);
-        }
-
-        contaCarta = 0;
+        checarCartas(id1,id2);
     }
 }
 
+function checarCartas(a,b) {
+    if (a===b) {
+        acertos ++;
+        return;
+    }
+    else {
+        setTimeout(desviraCartas,1000);
+        desviraCartas();
+    }
+}
+
+function desviraCartas() {
+    let frente1 = carta1.querySelector(".frente");
+    frente1.classList.remove("rotacao-frente");
+
+    let frente2 = carta2.querySelector(".frente");
+    frente2.classList.remove("rotacao-frente");
+
+    let atras1 = carta1.querySelector(".atras");
+    atras1.classList.remove("rotacao-atras");
+
+    let atras2 = carta2.querySelector(".atras");
+    atras2.classList.remove("rotacao-atras");
+}
+
+
+//relogio e tempo de jogo 
+let tempo = 0;
+let display = document.querySelector(".tempo")
+
+function relogio() {
+    tempo++;
+    display.innerHTML = `<h3>${tempo}</h3>`;
+}
+
+const interval = setInterval(relogio,1000);
+relogio();
+
+
 //fim de jogo
-if (acertos === numPares) {
-    alert("Parabéns! Você terminou o jogo em: " + numJogadas + " jogadas.")
+if (acertos === numPares) { 
+    clearInterval(interval);
+    alert("Parabéns! Você terminou o jogo em: " + numJogadas + " jogadas. Em " + tempo + " segundos." );
 }

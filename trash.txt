@@ -1,0 +1,19 @@
+let frente1 = carta1.querySelector(".frente");
+        let atras1 = carta1.querySelector(".atras");
+        let img1 = atras1.querySelector("img");
+        let src1 = img1.getAtribute("src");
+
+        let carta2 = carta;
+        let img2 = carta2.getAtribute("src");
+        let frente2 = carta2.querySelector(".frente");
+        let atras2 = carta2.querySelector(".atras");
+
+        if (img1 === img2) {
+            acertos ++;
+        }
+        else {
+            setTimeout(remove, 2000);
+            remove(frente1,frente2,atras1,atras2);
+        }
+
+        contaCarta = 0;
