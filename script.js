@@ -43,13 +43,7 @@ for (let indice = 0; indice < num; indice++) {
     `;
 }
 //até aqui tá tudo ok!
-//remove cartas, usado na função virarCarta
-function remove() {
-    a.classList.remove("rotacao-frente");
-    b.classList.remove("rotacao-frente");
-    c.classList.remove("rotacao-atras");
-    d.classList.remove("rotacao-atras");
-}
+
 
 //virar as cartas com o click
 let cartaVirada = false;
@@ -62,8 +56,12 @@ function virarCarta(carta) {
     const frente = carta.querySelector(".frente");
     const atras = carta.querySelector(".atras");
 
+    if (frente.classList.contains("rotacao-frente")) {
+        return
+    }
     frente.classList.add("rotacao-frente");
     atras.classList.add("rotacao-atras");
+    numJogadas ++;
 
     if (!cartaVirada) {  //primeira carta virada (ok)
         cartaVirada = true;
@@ -72,7 +70,6 @@ function virarCarta(carta) {
         return;
     }
     else { // segunda carta virada
-        numJogadas ++;
         carta2 = carta;
         id2 = carta2.getAttribute("id");
         cartaVirada = false;
@@ -84,11 +81,11 @@ function virarCarta(carta) {
 function checarCartas(a,b) {
     if (a===b) {
         acertos ++;
+        fimDeJogo();
         return;
     }
     else {
         setTimeout(desviraCartas,1000);
-        desviraCartas();
     }
 }
 
@@ -121,7 +118,9 @@ relogio();
 
 
 //fim de jogo
-if (acertos === numPares) { 
-    clearInterval(interval);
-    alert("Parabéns! Você terminou o jogo em: " + numJogadas + " jogadas. Em " + tempo + " segundos." );
+function fimDeJogo(){
+    if (acertos === numPares) { 
+        clearInterval(interval);
+        alert("Parabéns! Você terminou o jogo em: " + numJogadas + " jogadas. Em " + tempo + " segundos." );
+    }
 }
