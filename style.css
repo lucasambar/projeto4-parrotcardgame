@@ -107,6 +107,8 @@ h2{
     letter-spacing: -0.004em;
     text-align: left;
     color: grey;
+    display: block;
+    width: 160px;
 
     position: absolute;
     top: -30px;
@@ -138,7 +140,6 @@ h3 {
     letter-spacing: -0.004em;
     color: black;
     opacity: 1;
-    
 }
 h4{
     font-family: Roboto;
@@ -148,6 +149,9 @@ h4{
     letter-spacing: -0.004em;
     text-align: left;
     color: grey;
+
+    display: block;
+    width: 160px;
     
     position: absolute;
     bottom: -45px;
@@ -165,6 +169,7 @@ h4{
         line-height: 42px;
         letter-spacing: -0.004em;
         text-align: center;
+        margin-bottom: 44px;
     }
     section{
         width: 100%;
@@ -173,5 +178,8 @@ h4{
     }
     .carta{
         margin-left:0;
+    }
+    .relogio {
+        display: none;
     }
 }

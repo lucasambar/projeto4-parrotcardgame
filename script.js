@@ -42,8 +42,6 @@ for (let indice = 0; indice < num; indice++) {
     </div>
     `;
 }
-//até aqui tá tudo ok!
-
 
 //virar as cartas com o click
 let cartaVirada = false;
@@ -63,7 +61,7 @@ function virarCarta(carta) {
     atras.classList.add("rotacao-atras");
     numJogadas ++;
 
-    if (!cartaVirada) {  //primeira carta virada (ok)
+    if (!cartaVirada) {  
         cartaVirada = true;
         carta1 = carta;
         id1 = carta1.getAttribute("id");
@@ -114,7 +112,7 @@ function relogio() {
 }
 
 const interval = setInterval(relogio,1000);
-relogio();
+
 
 
 //fim de jogo
